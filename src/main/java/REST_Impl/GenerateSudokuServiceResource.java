@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/Generate")
+
 public class GenerateSudokuServiceResource implements GenerateSudokuService {
     private Generator generator;
 
@@ -21,9 +21,7 @@ public class GenerateSudokuServiceResource implements GenerateSudokuService {
     // use strategy pattern to decide where to get random sudoku from
     // then use with levels - EASY, MEDIUM, HARD, EXTREME
 
-    @GET
-    @Path("Random")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response generateRandomSudoku() {
         return null;
     }

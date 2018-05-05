@@ -6,6 +6,8 @@ import Model.Validation.ValidateImpl;
 import Model.Validation.Validation;
 import REST_Impl.SaveSudokuServiceResource;
 import REST_Impl.ValidateServiceResource;
+import REST_Interface.SaveSudokuService;
+import REST_Interface.ValidateService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +20,9 @@ import org.glassfish.jersey.servlet.ServletContainer;
 public class Launcher {
     private static final Logger LOG = LogManager.getLogger(Launcher.class);
 
-    static {
-        System.setProperty("log4j.configurationFile","log4j2.properties.xml");
-    }
+    //static {
+        //System.setProperty("log4j.configurationFile", "log4j2.xml");
+    //}
 
     public static void main(String[] args) throws Exception {
         new Launcher();
@@ -54,10 +56,12 @@ public class Launcher {
         ResourceConfig resourceConfig = new ResourceConfig();
 
         Validation validation = new ValidateImpl();
-        resourceConfig.register(new ValidateServiceResource(validation));
+        ValidateService validateService = new ValidateServiceResource(validation);
+        resourceConfig.register(validateService);
 
         CacheView cacheView = PersistenceFactory.getDefaultPersistenceImpl();
-        resourceConfig.register(new SaveSudokuServiceResource(cacheView));
+        SaveSudokuService saveSudokuService = new SaveSudokuServiceResource(cacheView);
+        resourceConfig.register(saveSudokuService);
 
         return resourceConfig;
     }

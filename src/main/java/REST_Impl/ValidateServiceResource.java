@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/validate")
 public class ValidateServiceResource implements ValidateService {
     private Validation validation;
 
@@ -17,19 +16,15 @@ public class ValidateServiceResource implements ValidateService {
         this.validation = validation;
     }
 
-    @GET
-    @Path("getLogic")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public String getStuff(){
         return validation.getTestString();
     }
 
-    @GET
-    @Path("test")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public Response validateShit(){
         String json = "{\n"+
-                "\"response\": \"hello nigger\" \n"+
+                "\"response\": \"hello there\" \n"+
                 "}";
         return Response.status(200)
                 .entity(json)
