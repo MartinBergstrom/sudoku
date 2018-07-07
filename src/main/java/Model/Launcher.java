@@ -2,10 +2,14 @@ package Model;
 
 import Model.Persistence.CacheView;
 import Model.Persistence.PersistenceFactory;
+import Model.Sudoku.Generator;
+import Model.Sudoku.SudokuGenerator;
 import Model.Validation.ValidateImpl;
 import Model.Validation.Validation;
+import REST_Impl.GenerateSudokuServiceResource;
 import REST_Impl.SaveSudokuServiceResource;
 import REST_Impl.ValidateServiceResource;
+import REST_Interface.GenerateSudokuService;
 import REST_Interface.SaveSudokuService;
 import REST_Interface.ValidateService;
 import org.apache.logging.log4j.Level;
@@ -54,6 +58,10 @@ public class Launcher {
     private static ResourceConfig createResourceConfig(){
         //manually inject dependencies to jetty resources
         ResourceConfig resourceConfig = new ResourceConfig();
+
+        Generator generator = new SudokuGenerator();
+        GenerateSudokuService generateSudokuService = new GenerateSudokuServiceResource(generator);
+        resourceConfig.register(generateSudokuService);
 
         Validation validation = new ValidateImpl();
         ValidateService validateService = new ValidateServiceResource(validation);

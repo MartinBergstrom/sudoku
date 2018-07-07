@@ -6,7 +6,6 @@ import Model.Sudoku.SudokuBoard;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.rmi.runtime.Log;
 
 import java.util.HashSet;
 import java.util.Optional;

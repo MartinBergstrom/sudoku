@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface SaveSudokuService {
 
     @POST
-    @Path("Save/{id}")
+    @Path("save/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postSudoku(String jsonMatrix, @PathParam("id")UUID uuid);
 }
