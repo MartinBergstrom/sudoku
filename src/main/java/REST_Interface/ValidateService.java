@@ -1,8 +1,6 @@
 package REST_Interface;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -14,8 +12,13 @@ public interface ValidateService {
     @Produces(MediaType.TEXT_PLAIN)
     public String getStuff();
 
-    @GET
-    @Path("test")
-    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Does not create any resource, just for validation
+     *
+     * @return
+     */
+    @POST
+    @Path("validate")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response validateShit();
 }

@@ -1,9 +1,7 @@
 package REST_Interface;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.print.attribute.standard.Media;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
@@ -12,7 +10,12 @@ import java.util.UUID;
 public interface SaveSudokuService {
 
     @POST
+    @Path("create/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createSudoku(String jsonMatrix, @PathParam("id")UUID uuid);
+
+    @PUT
     @Path("save/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postSudoku(String jsonMatrix, @PathParam("id")UUID uuid);
+    public Response updateSudouko(String jsonMatrix, @PathParam("id")UUID uuid);
 }
