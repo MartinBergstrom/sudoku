@@ -68,7 +68,7 @@ public class Launcher {
         resourceConfig.register(validateService);
 
         CacheView cacheView = PersistenceFactory.getDefaultPersistenceImpl();
-        SaveSudokuService saveSudokuService = new SaveSudokuServiceResource(cacheView);
+        SaveSudokuService saveSudokuService = new SaveSudokuServiceResource(cacheView, validation);
         resourceConfig.register(saveSudokuService);
 
         return resourceConfig;

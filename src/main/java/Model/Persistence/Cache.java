@@ -22,8 +22,21 @@ public class Cache implements CacheView{
     }
 
     @Override
-    public synchronized void addBoard(SudokuBoard board) {
+    public synchronized boolean boardExists(SudokuBoard board) {
+        synchronized (sudokuBoards) {
+            return sudokuBoards.contains(board);
+        }
+    }
+
+    @Override
+    public synchronized UUID addBoard(SudokuBoard board) {
         sudokuBoards.add(board);
+        return board.getID();
+    }
+
+    @Override
+    public void updateBoard(int[][] board, UUID uuid) {
+
     }
 
     @Override

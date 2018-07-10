@@ -6,16 +6,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
-@Path("/")
+@Path("/save")
 public interface SaveSudokuService {
 
     @POST
-    @Path("create/{id}")
+    @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSudoku(String jsonMatrix, @PathParam("id")UUID uuid);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createSudoku(String jsonMatrix);
 
     @PUT
-    @Path("save/{id}")
+    @Path("update/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateSudouko(String jsonMatrix, @PathParam("id")UUID uuid);
 }

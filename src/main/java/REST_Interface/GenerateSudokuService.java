@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/generate")
 public interface GenerateSudokuService {
+    
     @GET
     @Path("random/{diffi}")
     @Produces(MediaType.APPLICATION_JSON)

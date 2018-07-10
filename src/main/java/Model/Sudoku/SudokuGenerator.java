@@ -3,7 +3,6 @@ package Model.Sudoku;
 import REST_Interface.Difficulty;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
@@ -13,28 +12,29 @@ import java.util.*;
 
 public class SudokuGenerator implements Generator
 {
-    private static final String SUDOKUO_RESOURCES = "Sudokus";
+    private static final String SUDOKU_RESOURCES = "Sudokus";
+
     @Override
     public int[][] getRandomSudokuFromFile(Difficulty difficulty) throws FileNotFoundException {
-        URL url = SudokuGenerator.class.getClassLoader().getResource(SUDOKUO_RESOURCES);
-        if(url == null) {
-            throw new FileNotFoundException("Could not find resource folder with sodukos");
-        }
-        try {
-            File dir = new File(url.toURI());
-            File foundDir = null;
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir.toPath(),
-                    f -> Files.isDirectory(f))){
-                for (Path p: stream){
-                    foundDir = p.toFile();
-                    if(foundDir.getName().equalsIgnoreCase(difficulty.name())){
-                        break;
+        URL url = SudokuGenerator.class.getClassLoader().getResource(SUDOKU_RESOURCES);
+                    if(url == null) {
+                        throw new FileNotFoundException("Could not find resource folder with sodukos");
                     }
+                    try {
+                        File dir = new File(url.toURI());
+                        File foundDir = null;
+                        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir.toPath(),
+                                f -> Files.isDirectory(f))){
+                            for (Path p: stream){
+                                foundDir = p.toFile();
+                                if (foundDir.getName().equalsIgnoreCase(difficulty.name())){
+                                    break;
+                                }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(foundDir != null){
+            if (foundDir != null){
                 File[] sudokus = foundDir.listFiles();
                 return createSudokuArrayFromFile(sudokus[(int) System.currentTimeMillis() % sudokus.length]);
             }

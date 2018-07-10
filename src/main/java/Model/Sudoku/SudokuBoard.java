@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
-public class SudokuBoard{
+public class SudokuBoard implements Comparable<SudokuBoard>{
     private final UUID ID;
     private Cell[][] matrix;
 
@@ -57,17 +57,6 @@ public class SudokuBoard{
                 .toArray(Cell[][]::new);
     }
 
-//    interface IntegerToCellFunction{
-//
-//        public Cell applyAsCell(int nbr);
-//
-//    }
-//
-//    private Cell[][] transformArray(int[][] array, IntegerToCellFunction function){
-//        //TODO fix shit
-//        return null;
-//    }
-
     public int[][] getAsIntMatrix(){
         int[][] newMatrix = new int[matrix.length][matrix.length];
         for (int i = 0; i<matrix.length; i++){
@@ -85,6 +74,11 @@ public class SudokuBoard{
             }
             System.out.println();
         }
+    }
+
+    @Override
+    public int compareTo(SudokuBoard o) {
+        return Arrays.deepEquals(getAsIntMatrix(), o.getAsIntMatrix()) ? 0 : 1;
     }
 
     /**

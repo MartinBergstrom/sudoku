@@ -7,7 +7,11 @@ import java.util.UUID;
 
 public interface CacheView {
 
-    public void addBoard(SudokuBoard board);
+    public boolean boardExists(SudokuBoard board);
+
+    public UUID addBoard(SudokuBoard board);
+
+    public void updateBoard(int[][] board, UUID uuid);
 
     public SudokuBoard getWithId(UUID uuid);
 

@@ -16,10 +16,6 @@ public class GenerateSudokuServiceResource implements GenerateSudokuService {
         this.generator = generator;
     }
 
-    //TODO
-    // use strategy pattern to decide where to get random sudoku from
-    // then use with levels - EASY, MEDIUM, HARD, EXTREME
-
     @Override
     public Response generateRandomSudoku(Difficulty difficulty) {
         String json = "{\n"+
@@ -36,15 +32,15 @@ public class GenerateSudokuServiceResource implements GenerateSudokuService {
             return Response.status(404)
                     .build();
         }
-        int[][] sudokuko;
+        int[][] sudoku;
         try {
-            sudokuko = generator.getRandomSudokuFromFile(difficulty);
+            sudoku = generator.getRandomSudokuFromFile(difficulty);
         } catch (FileNotFoundException e) {
             return Response.status(404)
                     .build();
         }
         Gson gson = new Gson();
-        String jsonArray = gson.toJson(sudokuko);
+        String jsonArray = gson.toJson(sudoku);
         return Response.status(200)
                 .entity(jsonArray)
                 .build();

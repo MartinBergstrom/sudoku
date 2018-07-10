@@ -7,11 +7,6 @@ import javax.ws.rs.core.Response;
 @Path("/validate")
 public interface ValidateService {
 
-    @GET
-    @Path("getLogic")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getStuff();
-
     /**
      * Does not create any resource, just for validation
      *
@@ -20,5 +15,5 @@ public interface ValidateService {
     @POST
     @Path("validate")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response validateShit();
+    public Response validateShit(String jsonMatrix);
 }

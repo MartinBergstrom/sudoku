@@ -2,6 +2,7 @@ package REST_Impl;
 
 import Model.Validation.Validation;
 import REST_Interface.ValidateService;
+import com.google.gson.Gson;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,17 +18,12 @@ public class ValidateServiceResource implements ValidateService {
     }
 
     @Override
-    public String getStuff(){
-        return validation.getTestString();
-    }
-
-    @Override
-    public Response validateShit(){
-        String json = "{\n"+
-                "\"response\": \"hello there\" \n"+
-                "}";
-        return Response.status(200)
-                .entity(json)
-                .build();
+    public Response validateShit(String jsonMatrix){
+        Gson gson = new Gson();
+        if (validation.validateSudoku(gson.fromJson(jsonMatrix, int[][].class))){
+            return Response.status(200).build();
+        }else {
+            return Response.status(400).build();
+        }
     }
 }

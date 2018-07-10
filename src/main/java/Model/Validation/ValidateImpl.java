@@ -22,12 +22,11 @@ public class ValidateImpl implements Validation {
                 .filter(ValidateImpl::checkIfValidRow)
                 .count();
         boolean rowCheck = numberOfValidRows == 9;
-        if(rowCheck)
-            LOG.log(Level.INFO, "Row check validation is OK");
-
+        if(!rowCheck)
+            LOG.log(Level.INFO, "Row check validation failed");
         boolean squareCheck = checkSquares(sudokuBoard);
-        if(squareCheck)
-            LOG.log(Level.INFO, "Square check validation is OK");
+        if(!squareCheck)
+            LOG.log(Level.INFO, "Square check validation failed");
 
         return (rowCheck && squareCheck);
     }
@@ -54,13 +53,14 @@ public class ValidateImpl implements Validation {
     }
 
 
-    private static boolean checkIfValidRow(Cell[] row){
-        for(Cell cell : row){
-            Set<Integer> set = new HashSet<>();
+    private static boolean checkIfValidRow(Cell[] row)
+    {
+        Set<Integer> set = new HashSet<>();
+        for (Cell cell : row){
             Optional<Integer> optional = cell.getCellNumber();
-            if(optional.isPresent()){
+            if (optional.isPresent()){
                 int value = optional.get();
-                if(set.contains(value)){
+                if (set.contains(value)){
                     return false;
                 }
                 set.add(value);
