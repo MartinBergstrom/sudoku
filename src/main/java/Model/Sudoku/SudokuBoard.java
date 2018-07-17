@@ -2,12 +2,13 @@ package Model.Sudoku;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
-public class SudokuBoard implements Comparable<SudokuBoard>{
+public class SudokuBoard {
     private final UUID ID;
     private Cell[][] matrix;
 
@@ -77,8 +78,17 @@ public class SudokuBoard implements Comparable<SudokuBoard>{
     }
 
     @Override
-    public int compareTo(SudokuBoard o) {
-        return Arrays.deepEquals(getAsIntMatrix(), o.getAsIntMatrix()) ? 0 : 1;
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof SudokuBoard)) return false;
+        SudokuBoard other = (SudokuBoard) obj;
+        return Arrays.deepEquals(getAsIntMatrix(), other.getAsIntMatrix());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(matrix);
     }
 
     /**

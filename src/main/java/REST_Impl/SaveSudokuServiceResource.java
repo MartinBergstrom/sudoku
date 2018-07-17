@@ -27,7 +27,7 @@ public class SaveSudokuServiceResource implements SaveSudokuService {
         Gson gson = new Gson();
         SudokuBoard newBoard = new SudokuBoard(gson.fromJson(jsonMatrix, int[][].class));
         if (cacheView.boardExists(newBoard)){
-            return Response.status(422).entity("").build();
+            return Response.status(422).entity("Board already exists").build();
         }
         UUID uuid = cacheView.addBoard(newBoard);
         String jsonUuid = gson.toJson(uuid, UUID.class);
@@ -45,10 +45,10 @@ public class SaveSudokuServiceResource implements SaveSudokuService {
 
     private Response validate(String jsonMatrix) {
         Gson gson = new Gson();
-        if(!validation.validateSudoku(gson.fromJson(jsonMatrix, int[][].class))){
+        if (!validation.validateSudoku(gson.fromJson(jsonMatrix, int[][].class))){
             return Response.status(400)
                     .build();
-        }else{
+        }else {
             return Response.status(200).build();
         }
     }

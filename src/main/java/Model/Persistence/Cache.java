@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Cache implements CacheView{
-    private List<SudokuBoard> sudokuBoards;
+    private final List<SudokuBoard> sudokuBoards;
     private static Cache instance;
 
     public static Cache getInstance(){
@@ -35,8 +35,16 @@ public class Cache implements CacheView{
     }
 
     @Override
-    public void updateBoard(int[][] board, UUID uuid) {
-
+    public synchronized void updateBoard(int[][] board, UUID uuid) throws SudokuUIIDNotFoundException {
+        SudokuBoard foundBoard = null;
+        for (SudokuBoard b: sudokuBoards) {
+            if (b.getID().equals(uuid)){
+                foundBoard = b;
+            }
+        }
+        if (foundBoard == null) {
+            throw new SudokuUIIDNotFoundException();
+        }
     }
 
     @Override

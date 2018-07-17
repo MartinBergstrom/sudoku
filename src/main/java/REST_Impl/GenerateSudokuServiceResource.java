@@ -28,7 +28,7 @@ public class GenerateSudokuServiceResource implements GenerateSudokuService {
 
     @Override
     public Response getSudokukoFromFile(Difficulty difficulty) {
-        if(!difficulty.equals(Difficulty.EASY)){
+        if (!difficulty.equals(Difficulty.EASY)){
             return Response.status(404)
                     .build();
         }

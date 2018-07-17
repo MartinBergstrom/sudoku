@@ -11,7 +11,7 @@ public interface CacheView {
 
     public UUID addBoard(SudokuBoard board);
 
-    public void updateBoard(int[][] board, UUID uuid);
+    public void updateBoard(int[][] board, UUID uuid) throws SudokuUIIDNotFoundException;
 
     public SudokuBoard getWithId(UUID uuid);
 
