@@ -1,0 +1,14 @@
+table {
+  margin:1em auto;
+}
+td {
+  height:30px;
+  width:30px;
+  text-align:center;
+}
+td:nth-child(3n) {
+  padding-right: 1.5em;
+}
+tr:nth-child(3n) td {
+    padding-bottom: 1.5em;
+}
