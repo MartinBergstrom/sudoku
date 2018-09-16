@@ -27,7 +27,7 @@ public class GenerateSudokuServiceResource implements GenerateSudokuService {
     }
 
     @Override
-    public Response getSudokukoFromFile(Difficulty difficulty) {
+    public Response getRandomSudokuFromFile(Difficulty difficulty) {
         if (!difficulty.equals(Difficulty.EASY)){
             return Response.status(404)
                     .build();
@@ -39,6 +39,26 @@ public class GenerateSudokuServiceResource implements GenerateSudokuService {
             return Response.status(404)
                     .build();
         }
+        return buildJsonSudokuResponse(sudoku);
+    }
+
+    @Override
+    public Response getSudokuFromFileWithDiffiAndId(Difficulty difficulty, int id) {
+        if (!difficulty.equals(Difficulty.EASY)){
+            return Response.status(404)
+                    .build();
+        }
+        int[][] sudoku;
+        try {
+            sudoku = generator.getRandomSudokuFromFile(difficulty);
+        } catch (FileNotFoundException e) {
+            return Response.status(404)
+                    .build();
+        }
+        return buildJsonSudokuResponse(sudoku);
+    }
+
+    private Response buildJsonSudokuResponse(int[][] sudoku) {
         Gson gson = new Gson();
         String jsonArray = gson.toJson(sudoku);
         return Response.status(200)

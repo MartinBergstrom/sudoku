@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Cache implements CacheView{
+public class DataBaseInMemory implements DataBaseInMemoryView {
     private final List<SudokuBoard> sudokuBoards;
-    private static Cache instance;
+    private static DataBaseInMemory instance;
 
-    public static Cache getInstance(){
+    public static DataBaseInMemory getInstance(){
         if(instance == null){
-            instance = new Cache();
+            instance = new DataBaseInMemory();
         }
         return instance;
     }
-    private Cache() {
+    private DataBaseInMemory() {
         sudokuBoards = new ArrayList<>();
     }
 

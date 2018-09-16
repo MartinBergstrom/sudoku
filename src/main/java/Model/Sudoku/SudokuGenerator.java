@@ -17,26 +17,26 @@ public class SudokuGenerator implements Generator
     @Override
     public int[][] getRandomSudokuFromFile(Difficulty difficulty) throws FileNotFoundException {
         URL url = SudokuGenerator.class.getClassLoader().getResource(SUDOKU_RESOURCES);
-                    if(url == null) {
-                        throw new FileNotFoundException("Could not find resource folder with sodukos");
+        if(url == null) {
+            throw new FileNotFoundException("Could not find resource folder with sodukos");
+        }
+        try {
+            File dir = new File(url.toURI());
+            File foundDir = null;
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir.toPath(),
+                    f -> Files.isDirectory(f))){
+                for (Path p: stream){
+                    foundDir = p.toFile();
+                    if (foundDir.getName().equalsIgnoreCase(difficulty.name())){
+                        break;
                     }
-                    try {
-                        File dir = new File(url.toURI());
-                        File foundDir = null;
-                        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir.toPath(),
-                                f -> Files.isDirectory(f))){
-                            for (Path p: stream){
-                                foundDir = p.toFile();
-                                if (foundDir.getName().equalsIgnoreCase(difficulty.name())){
-                                    break;
-                                }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             if (foundDir != null){
                 File[] sudokus = foundDir.listFiles();
-                return createSudokuArrayFromFile(sudokus[(int) System.currentTimeMillis() % sudokus.length]);
+                return createSudokuArrayFromFile(sudokus[(new Random()).nextInt(sudokus.length)]);
             }
         } catch (URISyntaxException e) {
             e.printStackTrace();

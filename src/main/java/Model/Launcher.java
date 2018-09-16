@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Persistence.CacheView;
+import Model.Persistence.DataBaseInMemoryView;
 import Model.Persistence.PersistenceFactory;
 import Model.Sudoku.Generator;
 import Model.Sudoku.SudokuGenerator;
@@ -67,8 +67,8 @@ public class Launcher {
         ValidateService validateService = new ValidateServiceResource(validation);
         resourceConfig.register(validateService);
 
-        CacheView cacheView = PersistenceFactory.getDefaultPersistenceImpl();
-        SaveSudokuService saveSudokuService = new SaveSudokuServiceResource(cacheView, validation);
+        DataBaseInMemoryView dataBaseInMemoryView = PersistenceFactory.getDefaultPersistenceImpl();
+        SaveSudokuService saveSudokuService = new SaveSudokuServiceResource(dataBaseInMemoryView, validation);
         resourceConfig.register(saveSudokuService);
 
         return resourceConfig;

@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.UUID;
 
-public interface CacheView {
+public interface DataBaseInMemoryView {
 
     public boolean boardExists(SudokuBoard board);
 

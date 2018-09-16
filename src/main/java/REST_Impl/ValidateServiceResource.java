@@ -1,6 +1,7 @@
 package REST_Impl;
 
 import Model.Validation.Validation;
+import Model.Validation.ValidationError;
 import REST_Interface.ValidateService;
 import com.google.gson.Gson;
 
@@ -18,12 +19,13 @@ public class ValidateServiceResource implements ValidateService {
     }
 
     @Override
-    public Response validateShit(String jsonMatrix){
+    public Response validateCompleteBoard(String jsonMatrix){
         Gson gson = new Gson();
-        if (validation.validateSudoku(gson.fromJson(jsonMatrix, int[][].class))){
+        ValidationError validationError = validation.validateSudoku(gson.fromJson(jsonMatrix, int[][].class));
+        if (validationError.equals(ValidationError.OK)){
             return Response.status(200).build();
         }else {
-            return Response.status(400).build();
+            return Response.status(400).entity(validationError).build();
         }
     }
 }

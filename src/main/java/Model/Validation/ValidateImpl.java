@@ -7,28 +7,37 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class ValidateImpl implements Validation {
     private static final Logger LOG = LogManager.getLogger(ValidateImpl.class);
 
     @Override
-    public boolean validateSudoku(int[][] matrix) {
+    public ValidationError validateSudoku(int[][] matrix) {
+        OptionalInt invalidValue = Arrays.stream(matrix)
+                .flatMapToInt(IntStream::of)
+                .filter(e -> e < 0 || e > 9)
+                .findAny();
+        if (invalidValue.isPresent()) {
+            return ValidationError.INVALID_NUMBER;
+        }
         SudokuBoard sudokuBoard = new SudokuBoard(matrix);
 
         int numberOfValidRows = (int) sudokuBoard.getRowsAsStream()
                 .filter(ValidateImpl::checkIfValidRow)
                 .count();
         boolean rowCheck = numberOfValidRows == 9;
-        if(!rowCheck)
+        if (!rowCheck) {
             LOG.log(Level.INFO, "Row check validation failed");
+            return ValidationError.ROW_CHECK_FAILED;
+        }
         boolean squareCheck = checkSquares(sudokuBoard);
-        if(!squareCheck)
+        if (!squareCheck) {
             LOG.log(Level.INFO, "Square check validation failed");
-
-        return (rowCheck && squareCheck);
+            return ValidationError.SQUARE_CHECK_FAILED;
+        }
+        return ValidationError.OK;
     }
 
     private static boolean checkSquares(SudokuBoard board){

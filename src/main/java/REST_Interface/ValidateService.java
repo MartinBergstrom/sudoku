@@ -8,12 +8,14 @@ import javax.ws.rs.core.Response;
 public interface ValidateService {
 
     /**
+     * Validates the completeSudoBoard
+     *
      * Does not create any resource, just for validation
      *
      * @return
      */
     @POST
-    @Path("validate")
+    @Path("/board")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response validateShit(String jsonMatrix);
+    public Response validateCompleteBoard(String jsonMatrix);
 }
