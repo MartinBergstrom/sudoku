@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SudokuBackendService } from '../sudoku-backend.service';
 
 @Component({
   selector: 'app-sudoku-board',
@@ -21,7 +22,7 @@ export class SudokuBoardComponent implements OnInit {
 
   private selectedNumber: number;
 
-  constructor() {
+  constructor(private sudokuService: SudokuBackendService) {
   }
 
   ngOnInit() {
@@ -37,5 +38,9 @@ export class SudokuBoardComponent implements OnInit {
 
   onInputClick(nbr: number): void {
     console.log(nbr);
+  }
+
+  replaceBoard(): void {
+    this.board = this.sudokuService.getRandomSudoku();
   }
 }
