@@ -1,23 +1,29 @@
 package REST_Impl;
 
 import Model.Sudoku.Generator;
+import Model.Sudoku.GeneratorFactory;
 import REST_Interface.Difficulty;
 import REST_Interface.GenerateSudokuService;
 import com.google.gson.Gson;
 
 import javax.ws.rs.core.Response;
-import java.io.FileNotFoundException;
-
 
 public class GenerateSudokuServiceResource implements GenerateSudokuService {
-    private Generator generator;
+    private GeneratorFactory generatorFactory;
 
-    public GenerateSudokuServiceResource(Generator generator){
-        this.generator = generator;
+    public GenerateSudokuServiceResource(GeneratorFactory generatorFactory){
+        this.generatorFactory = generatorFactory;
     }
 
     @Override
     public Response generateRandomSudoku(Difficulty difficulty) {
+        //TODO
+        Generator generator = generatorFactory.getGenerator(GeneratorFactory.GeneratorType.DEFAULT_GENERATOR);
+        try {
+            int[][] generatedBoard = generator.generateRandomSudoku(difficulty);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String json = "{\n"+
                 "\"response\": \"Random sudoku incoming, with diff:" + difficulty.name() + "\" \n"+
                 "}";
@@ -28,31 +34,17 @@ public class GenerateSudokuServiceResource implements GenerateSudokuService {
 
     @Override
     public Response getRandomSudokuFromFile(Difficulty difficulty) {
+        Generator generator = generatorFactory.getGenerator(GeneratorFactory.GeneratorType.FILE_GENERATOR);
         if (!difficulty.equals(Difficulty.EASY)){
             return Response.status(404)
                     .build();
         }
         int[][] sudoku;
         try {
-            sudoku = generator.getRandomSudokuFromFile(difficulty);
-        } catch (FileNotFoundException e) {
+            sudoku = generator.generateRandomSudoku(difficulty);
+        } catch (Exception e) {
             return Response.status(404)
-                    .build();
-        }
-        return buildJsonSudokuResponse(sudoku);
-    }
-
-    @Override
-    public Response getSudokuFromFileWithDiffiAndId(Difficulty difficulty, int id) {
-        if (!difficulty.equals(Difficulty.EASY)){
-            return Response.status(404)
-                    .build();
-        }
-        int[][] sudoku;
-        try {
-            sudoku = generator.getRandomSudokuFromFile(difficulty);
-        } catch (FileNotFoundException e) {
-            return Response.status(404)
+                    .entity(e)
                     .build();
         }
         return buildJsonSudokuResponse(sudoku);

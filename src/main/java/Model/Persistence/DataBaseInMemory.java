@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DataBaseInMemory implements DataBaseInMemoryView {
+public class DataBaseInMemory implements PersistenceView {
     private final List<SudokuBoard> sudokuBoards;
     private static DataBaseInMemory instance;
 

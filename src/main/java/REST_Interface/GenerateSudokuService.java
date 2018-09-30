@@ -16,12 +16,8 @@ public interface GenerateSudokuService {
     public Response generateRandomSudoku(@PathParam("diffi")Difficulty difficulty);
 
     @GET
-    @Path("file/random/{diffi}")
+    @Path("random/file/{diffi}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRandomSudokuFromFile(@PathParam("diffi")Difficulty difficulty);
 
-    @GET
-    @Path("file/{diffi}/{id]")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getSudokuFromFileWithDiffiAndId(@PathParam("diffi")Difficulty difficulty, @PathParam("id")int id);
 }

@@ -1,6 +1,6 @@
 package REST_Impl;
 
-import Model.Persistence.DataBaseInMemoryView;
+import Model.Persistence.PersistenceView;
 import Model.Sudoku.SudokuBoard;
 import Model.Validation.Validation;
 import Model.Validation.ValidationError;
@@ -11,11 +11,11 @@ import javax.ws.rs.core.Response;
 import java.util.UUID;
 
 public class SaveSudokuServiceResource implements SaveSudokuService {
-    private final DataBaseInMemoryView dataBaseInMemoryView;
+    private final PersistenceView persistenceView;
     private final Validation validation;
 
-    public SaveSudokuServiceResource(DataBaseInMemoryView dataBaseInMemoryView, Validation validation){
-        this.dataBaseInMemoryView = dataBaseInMemoryView;
+    public SaveSudokuServiceResource(PersistenceView persistenceView, Validation validation){
+        this.persistenceView = persistenceView;
         this.validation = validation;
     }
 
@@ -27,10 +27,10 @@ public class SaveSudokuServiceResource implements SaveSudokuService {
         }
         Gson gson = new Gson();
         SudokuBoard newBoard = new SudokuBoard(gson.fromJson(jsonMatrix, int[][].class));
-        if (dataBaseInMemoryView.boardExists(newBoard)){
+        if (persistenceView.boardExists(newBoard)){
             return Response.status(422).entity("Board already exists").build();
         }
-        UUID uuid = dataBaseInMemoryView.addBoard(newBoard);
+        UUID uuid = persistenceView.addBoard(newBoard);
         String jsonUuid = gson.toJson(uuid, UUID.class);
 
         return Response.status(200)

@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 public interface Generator {
 
-    public int[][] getRandomSudokuFromFile(Difficulty difficulty) throws FileNotFoundException;
+    public int[][] generateRandomSudoku(Difficulty difficulty) throws Exception;
 
-    public int[][] generateRandomSudoku(Difficulty difficulty);
+    public int numberOfGeneratedSudokus();
 }

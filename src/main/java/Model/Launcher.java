@@ -1,9 +1,9 @@
 package Model;
 
-import Model.Persistence.DataBaseInMemoryView;
+import Model.Persistence.DataBaseInMemory;
 import Model.Persistence.PersistenceFactory;
-import Model.Sudoku.Generator;
-import Model.Sudoku.SudokuGenerator;
+import Model.Persistence.PersistenceView;
+import Model.Sudoku.GeneratorFactory;
 import Model.Validation.ValidateImpl;
 import Model.Validation.Validation;
 import REST_Impl.GenerateSudokuServiceResource;
@@ -59,15 +59,15 @@ public class Launcher {
         //manually inject dependencies to jetty resources
         ResourceConfig resourceConfig = new ResourceConfig();
 
-        Generator generator = new SudokuGenerator();
-        GenerateSudokuService generateSudokuService = new GenerateSudokuServiceResource(generator);
+        GeneratorFactory generatorFactory = new GeneratorFactory();
+        GenerateSudokuService generateSudokuService = new GenerateSudokuServiceResource(generatorFactory);
         resourceConfig.register(generateSudokuService);
 
         Validation validation = new ValidateImpl();
         ValidateService validateService = new ValidateServiceResource(validation);
         resourceConfig.register(validateService);
 
-        DataBaseInMemoryView dataBaseInMemoryView = PersistenceFactory.getDefaultPersistenceImpl();
+        PersistenceView dataBaseInMemoryView = PersistenceFactory.getPersistenceImpl("memory");
         SaveSudokuService saveSudokuService = new SaveSudokuServiceResource(dataBaseInMemoryView, validation);
         resourceConfig.register(saveSudokuService);
 

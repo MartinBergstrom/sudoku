@@ -5,5 +5,4 @@ public interface Validation {
 
     public ValidationError validateSudoku(int[][] matrix);
 
-    public String getTestString();
 }
