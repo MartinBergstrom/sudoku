@@ -11,7 +11,7 @@ public class PersistenceFactory {
 
     /**
      *
-     * @param identifier memory, file
+     * @param identifier "memory", "file"
      *
      * @return
      */

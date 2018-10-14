@@ -1,6 +1,7 @@
 package Model.Sudoku;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
@@ -8,14 +9,20 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
-public class SudokuBoard {
+public class SudokuBoard implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final UUID ID;
     private Cell[][] matrix;
 
     public SudokuBoard(int[][] array){
         initializeMatrixClassicWay(array);
-        printMatrix();
         ID = UUID.randomUUID();
+    }
+
+    public SudokuBoard(int[][] array, UUID uuid) {
+        initializeMatrixClassicWay(array);
+        ID = uuid;
     }
 
     public UUID getID(){
@@ -68,7 +75,7 @@ public class SudokuBoard {
         return newMatrix;
     }
 
-    private void printMatrix(){
+    public void printMatrix(){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 System.out.print(matrix[i][j] + " ");
