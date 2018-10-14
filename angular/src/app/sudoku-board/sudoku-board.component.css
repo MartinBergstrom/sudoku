@@ -2,9 +2,11 @@ table {
   margin:1em auto;
 }
 td {
-  height:30px;
-  width:30px;
   text-align:center;
+}
+input {
+  height:15px;
+  width:30px;
 }
 td:nth-child(3n) {
   padding-right: 1.5em;

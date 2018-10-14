@@ -4,7 +4,6 @@
 <table>
   <tr *ngFor="let rows of board; let i = index; trackBy:trackByIdx">
     <td *ngFor="let col of rows; let j = index; trackBy:trackByIdx">
-      <p>{{i}}:{{j}}</p>
       <input [(ngModel)]="board[i][j]" type="number" min="0" max="9" placeholder="{{col}}">
     </td>
   </tr>
