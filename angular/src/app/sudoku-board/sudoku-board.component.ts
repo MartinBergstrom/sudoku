@@ -32,6 +32,10 @@ export class SudokuBoardComponent implements OnInit {
     return index;
   }
 
+  onChange(): void {
+    console.log(this.board);
+  }
+
   onClick(): void {
     console.log(this.board);
   }

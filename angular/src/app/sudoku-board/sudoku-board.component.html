@@ -4,7 +4,7 @@
 <table>
   <tr *ngFor="let rows of board; let i = index; trackBy:trackByIdx">
     <td *ngFor="let col of rows; let j = index; trackBy:trackByIdx">
-      <input [(ngModel)]="board[i][j]" type="number" min="0" max="9" placeholder="{{col}}">
+      <input [(ngModel)]="board[i][j]" (change)="onChange()"type="number" min="0" max="9" placeholder="{{col}}">
     </td>
   </tr>
 </table>
